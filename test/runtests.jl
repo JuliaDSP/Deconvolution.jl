@@ -1,4 +1,4 @@
-using Wiener
+using Deconvolution
 using Base.Test
 
 # write your own tests here

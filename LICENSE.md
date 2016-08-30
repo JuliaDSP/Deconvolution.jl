@@ -1,4 +1,4 @@
-The Wiener.jl package is licensed under the MIT "Expat" License:
+The Deconvolution.jl package is licensed under the MIT "Expat" License:
 
 > Copyright (c) 2016: Mosè Giordano.
 >
