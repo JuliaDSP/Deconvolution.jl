@@ -64,9 +64,9 @@ a digital signal. The arguments are:
 
 - ``input``: the digital signal
 - ``signal``: the original signal (or a signal with a likely similar power
-   spectrum)
+  spectrum)
 - ``noise``: the noise of the signal (or a noise with a likely similar power
-   spectrum)
+  spectrum)
 - ``blurring`` (optional argument): the blurring function
 
 All arguments must be arrays, all with the same size, and all of them in the
