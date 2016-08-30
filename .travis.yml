@@ -9,7 +9,10 @@ julia:
   - nightly
 notifications:
   email: false
-# uncomment the following lines to override the default test script
-#script:
-#  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-#  - julia -e 'Pkg.clone(pwd()); Pkg.build("Deconvolution"); Pkg.test("Deconvolution"; coverage=true)'
+git:
+  depth: 999999
+script:
+ - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+ - julia -e 'Pkg.clone(pwd()); Pkg.build("Deconvolution"); Pkg.test("Deconvolution"; coverage=true)'
+after_success:
+ - julia -e 'cd(Pkg.dir("Deconvolution")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(process_folder()); Codecov.submit(process_folder())'

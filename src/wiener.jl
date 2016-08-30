@@ -42,6 +42,7 @@ end
 
 ### User interface
 
+## Without blurring
 function wiener(input::AbstractArray, signal::AbstractArray,
                 noise::AbstractArray)
     input_ft = fft(input)
@@ -51,9 +52,11 @@ function wiener(input::AbstractArray, signal::AbstractArray,
                            noise_power_spectrum)
 end
 
+# Noise as a real (it's converted to an array)
 wiener(input::AbstractArray, signal::AbstractArray, noise::Real) =
     wiener(input, signal, ones(input)*noise)
 
+## With blurring
 function wiener(input::AbstractArray, signal::AbstractArray,
                 noise::AbstractArray, blurring::AbstractArray)
     input_ft = fft(input)
@@ -64,6 +67,7 @@ function wiener(input::AbstractArray, signal::AbstractArray,
                              noise_power_spectrum, blurring_ft)
 end
 
+# Noise as a real (it's converted to an array)
 wiener(input::AbstractArray, signal::AbstractArray,
        noise::Real, blurring::AbstractArray) =
            wiener(input, signal, ones(input)*noise, blurring)
