@@ -29,12 +29,10 @@ Usage
 Currently ``Deconvolution.jl`` provides only one methd, but others will come in
 the future.
 
-``wiener``
-~~~~~~~~~~
+``wiener`` function
+~~~~~~~~~~~~~~~~~~~
 
-.. code:: julia
-
-    wiener(input, signal, noise[, blurring])
+.. function:: wiener(input, signal, noise[, blurring])
 
 The `Wiener deconvolution
 <https://en.wikipedia.org/wiki/Wiener_deconvolution>`__ attempts at reducing the
@@ -59,8 +57,8 @@ For a short review of the Wiener deconvolution method see
 https://github.com/giordano/wiener-filter/releases/download/final/wiener.pdf and
 references therein.
 
-The ``wiener`` function can be used to apply the Wiener deconvolution method to
-a digital signal. The arguments are:
+The :func:`wiener` function can be used to apply the Wiener deconvolution method
+to a digital signal. The arguments are:
 
 - ``input``: the digital signal
 - ``signal``: the original signal (or a signal with a likely similar power
@@ -82,7 +80,77 @@ Examples
 Wiener deconvolution
 ~~~~~~~~~~~~~~~~~~~~
 
-Here is an example of use of ``wiener`` function to perform the Wiener
+Noisy time series
+'''''''''''''''''
+
+This is an example of application of the Wiener deconvolution to a time series.
+
+We first construct the noisy signal:
+
+.. code-block:: julia
+
+   using LombScargle, Deconvolution, Plots
+   t = linspace(0, 10, 1000) # observation times
+   x = sinpi(t) .* cos(5t) - 1.5cospi(t) .* sin(2t) # the original signal
+   n = rand(length(x)) # noise to be added
+   y = x + 3(n - mean(n)) # observed noisy signal
+
+In order to perform the Wiener deconvolution, we need a signal that has a power
+spectrum similar to that of the original signal.  We can use the `Lomb–Scargle
+periodogram <https://en.wikipedia.org/wiki/Least-squares_spectral_analysis>`__
+to find out the dominant frequencies in the observed signal, as implemented in
+the the Julia package `LombScargle.jl
+<https://github.com/giordano/LombScargle.jl>`__.
+
+.. code-block:: julia
+
+   # Lomb-Scargle periodogram
+   p = lombscargle(t, y, maximum_frequency=2, samples_per_peak=10)
+   plot(freqpower(p)...)
+
+After plotting the periodogram you notice that it has three peaks, one for each
+of the following intervals: :math:`[0, 0.5]`, :math:`[0.5, 1]`, :math:`[1,
+1.5]`.  Use the ``LombScargle.model`` function to create the best-fitting
+Lomb–Scargle model at the three best frequencies, that can be found with the
+``findmaxfreq`` (see the manual at http://lombscarglejl.readthedocs.io/ for more
+details):
+
+.. code-block:: julia
+
+    m1 = LombScargle.model(t, y, findmaxfreq(p, [0, 0.5])[1]) # first model
+    m2 = LombScargle.model(t, y, findmaxfreq(p, [0.5, 1])[1]) # first model
+    m3 = LombScargle.model(t, y, findmaxfreq(p, [1, 1.5])[1]) # first model
+
+Once you have these three frequencies, you can deconvolve ``y`` by feeding
+:func:`wiener` with a simple signal that is the sum of these three models:
+
+.. code-block:: julia
+
+   signal = m1 + m2 + m3 # signal for `wiener`
+   noise = rand(length(y)) # noise for `wiener`
+   polished = wiener(y, signal, noise)
+   # Compare...
+   plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
+   plot!(t, y, label="Observed signal") # ...original and observed signal
+   plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
+   plot!(t, polished, label="Recovered with Wiener") # ...original and recovered signal
+   plot!(t, signal, label="Lomb–Scargle model") #...and best fitting Lomb–Scargle model
+
+.. image:: wiener-time-series-observed.png
+.. image:: wiener-time-series-recovered.png
+
+Note that the signal recovered with the Wiener deconvolution is generally a good
+improvement with respect to the best Lomb–Scargle model obtained using a few
+frequencies.
+
+With real-world data the Lomb–Scargle periodogram may not work as good as in
+this toy-example, but we showed a possible strategy to create a suitable signal
+to use with :func:`wiener` function.
+
+Blurred image
+'''''''''''''
+
+Here is an example of use of :func:`wiener` function to perform the Wiener
 deconvolution of an image, degraded with a blurring function and an additive
 noise.
 
