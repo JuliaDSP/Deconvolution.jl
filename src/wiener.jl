@@ -1,4 +1,4 @@
-### Wiener.jl ---  Wiener deconvolution
+### wiener.jl ---  Wiener deconvolution
 #
 # Copyright (C) 2016 Mosè Giordano.
 #

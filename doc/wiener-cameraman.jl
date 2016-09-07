@@ -9,7 +9,7 @@
 #
 # License is MIT "Expat".
 #
-###
+### Commentary:
 #
 # This file produces an example image used in Deconvolution.jl documentation.
 #

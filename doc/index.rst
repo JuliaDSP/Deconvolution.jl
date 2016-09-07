@@ -4,8 +4,8 @@ Deconvolution.jl
 Introduction
 ------------
 
-`This package <https://github.com/giordano/Deconvolution.jl>`__ provides a set
-of functions to `deconvolve <https://en.wikipedia.org/wiki/Deconvolution>`__
+`Deconvolution.jl <https://github.com/JuliaDSP/Deconvolution.jl>`__ provides a
+set of functions to `deconvolve <https://en.wikipedia.org/wiki/Deconvolution>`__
 digital signals, like images or time series.  This is written in `Julia
 <http://julialang.org/>`__, a modern high-level, high-performance dynamic
 programming language designed for technical computing.
@@ -26,8 +26,8 @@ run the command
 Usage
 -----
 
-Currently ``Deconvolution.jl`` provides only one methd, but others will come in
-the future.
+Currently ``Deconvolution.jl`` provides only one methd, but others will
+hopefully come in the future.
 
 ``wiener`` function
 ~~~~~~~~~~~~~~~~~~~
@@ -42,7 +42,7 @@ assumed to be degraded by additive noise and a shift-invariant blurring
 function.
 
 Theoretically, the Wiener deconvolution method requires the knowledge of the
-original signal, of the blurring function, and the noise.  However, these
+original signal, the blurring function, and the noise.  However, these
 conditions are difficult to met (and, of course, if you know the original signal
 you do not need to perform a deconvolution in order to recover the signal
 itself), but a strenght of the Wiener deconvolution is that it works in the
@@ -54,7 +54,7 @@ possible to estimate the original signal power spectrum using a representative
 of the class of signals being filtered.
 
 For a short review of the Wiener deconvolution method see
-https://github.com/giordano/wiener-filter/releases/download/final/wiener.pdf and
+http://www.dmf.unisalento.it/~giordano/allow_listing/wiener.pdf and
 references therein.
 
 The :func:`wiener` function can be used to apply the Wiener deconvolution method
@@ -108,18 +108,18 @@ the the Julia package `LombScargle.jl
    p = lombscargle(t, y, maximum_frequency=2, samples_per_peak=10)
    plot(freqpower(p)...)
 
-After plotting the periodogram you notice that it has three peaks, one for each
+After plotting the periodogram you notice that it has three peaks, one in each
 of the following intervals: :math:`[0, 0.5]`, :math:`[0.5, 1]`, :math:`[1,
 1.5]`.  Use the ``LombScargle.model`` function to create the best-fitting
 Lomb–Scargle model at the three best frequencies, that can be found with the
-``findmaxfreq`` (see the manual at http://lombscarglejl.readthedocs.io/ for more
-details):
+``findmaxfreq`` function (see the manual at http://lombscarglejl.readthedocs.io/
+for more details):
 
 .. code-block:: julia
 
     m1 = LombScargle.model(t, y, findmaxfreq(p, [0, 0.5])[1]) # first model
-    m2 = LombScargle.model(t, y, findmaxfreq(p, [0.5, 1])[1]) # first model
-    m3 = LombScargle.model(t, y, findmaxfreq(p, [1, 1.5])[1]) # first model
+    m2 = LombScargle.model(t, y, findmaxfreq(p, [0.5, 1])[1]) # second model
+    m3 = LombScargle.model(t, y, findmaxfreq(p, [1, 1.5])[1]) # third model
 
 Once you have these three frequencies, you can deconvolve ``y`` by feeding
 :func:`wiener` with a simple signal that is the sum of these three models:
@@ -140,8 +140,8 @@ Once you have these three frequencies, you can deconvolve ``y`` by feeding
 .. image:: wiener-time-series-recovered.png
 
 Note that the signal recovered with the Wiener deconvolution is generally a good
-improvement with respect to the best Lomb–Scargle model obtained using a few
-frequencies.
+improvement with respect to the best-fitting Lomb–Scargle model obtained using a
+few frequencies.
 
 With real-world data the Lomb–Scargle periodogram may not work as good as in
 this toy-example, but we showed a possible strategy to create a suitable signal
@@ -196,7 +196,7 @@ noise.
 Development
 -----------
 
-The package is developed at https://github.com/giordano/Deconvolution.jl.  There
+The package is developed at https://github.com/JuliaDSP/Deconvolution.jl.  There
 you can submit bug reports, propose new deconvolution methods with pull
 requests, and make suggestions.
 
@@ -204,7 +204,7 @@ History
 ~~~~~~~
 
 The ChangeLog of the package is available in `NEWS.md
-<https://github.com/giordano/Deconvolution.jl/blob/master/NEWS.md>`__ file in
+<https://github.com/JuliaDSP/Deconvolution.jl/blob/master/NEWS.md>`__ file in
 top directory.
 
 License

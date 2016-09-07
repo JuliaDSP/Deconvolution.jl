@@ -9,7 +9,7 @@
 #
 # License is MIT "Expat".
 #
-###
+### Commentary:
 #
 # This file produces an example image used in Deconvolution.jl documentation.
 #
@@ -27,8 +27,8 @@ p = lombscargle(t, y, maximum_frequency=2, samples_per_peak=10)
 plot(freqpower(p)...)
 
 m1 = LombScargle.model(t, y, findmaxfreq(p, [0, 0.5])[1]) # first model
-m2 = LombScargle.model(t, y, findmaxfreq(p, [0.5, 1])[1]) # first model
-m3 = LombScargle.model(t, y, findmaxfreq(p, [1, 1.5])[1]) # first model
+m2 = LombScargle.model(t, y, findmaxfreq(p, [0.5, 1])[1]) # second model
+m3 = LombScargle.model(t, y, findmaxfreq(p, [1, 1.5])[1]) # third model
 
 signal = m1 + m2 + m3
 noise = rand(length(y)) # noise for `wiener`
