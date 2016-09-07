@@ -120,14 +120,14 @@ view(polished2) # ...the second polished image
 Development
 -----------
 
-The package is developed at https://github.com/giordano/Deconvolution.jl.  There
+The package is developed at https://github.com/JuliaDSP/Deconvolution.jl.  There
 you can submit bug reports, propose new deconvolution methods with pull
 requests, and make suggestions.
 
 ### History ###
 
 The ChangeLog of the package is available in
-[NEWS.md](https://github.com/giordano/Deconvolution.jl/blob/master/NEWS.md) file
+[NEWS.md](https://github.com/JuliaDSP/Deconvolution.jl/blob/master/NEWS.md) file
 in top directory.
 
 License
@@ -151,14 +151,14 @@ original author is Mosè Giordano.
 [pkg-0.5-img]: http://pkg.julialang.org/badges/Deconvolution_0.5.svg
 [pkg-0.5-url]: http://pkg.julialang.org/detail/Deconvolution.html
 
-[travis-img]: https://travis-ci.org/giordano/Deconvolution.jl.svg?branch=master
-[travis-url]: https://travis-ci.org/giordano/Deconvolution.jl
+[travis-img]: https://travis-ci.org/JuliaDSP/Deconvolution.jl.svg?branch=master
+[travis-url]: https://travis-ci.org/JuliaDSP/Deconvolution.jl
 
-[appvey-img]: https://ci.appveyor.com/api/projects/status/lfy5qm5iukoka8y3/branch/master?svg=true
+[appvey-img]: https://ci.appveyor.com/api/projects/status/8gfd4r6807w93umj/branch/master?svg=true
 [appvey-url]: https://ci.appveyor.com/project/giordano/deconvolution-jl
 
-[coveral-img]: https://coveralls.io/repos/github/giordano/Deconvolution.jl/badge.svg?branch=master
-[coveral-url]: https://coveralls.io/github/giordano/Deconvolution.jl?branch=master
+[coveral-img]: https://coveralls.io/repos/github/JuliaDSP/Deconvolution.jl/badge.svg?branch=master
+[coveral-url]: https://coveralls.io/github/JuliaDSP/Deconvolution.jl?branch=master
 
-[codecov-img]: https://codecov.io/gh/giordano/Deconvolution.jl/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/giordano/Deconvolution.jl
+[codecov-img]: https://codecov.io/gh/JuliaDSP/Deconvolution.jl/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/JuliaDSP/Deconvolution.jl
