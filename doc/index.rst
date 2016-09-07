@@ -198,7 +198,8 @@ Development
 
 The package is developed at https://github.com/JuliaDSP/Deconvolution.jl.  There
 you can submit bug reports, propose new deconvolution methods with pull
-requests, and make suggestions.
+requests, and make suggestions.  If you would like to take over maintainership
+of the package in order to further improve it, please open an issue.
 
 History
 ~~~~~~~
