@@ -62,7 +62,7 @@ digital signal.  The arguments are:
   spectrum)
 * `noise`: the noise of the signal (or a noise with a luckily similar power
   spectrum)
-* `blurring` (optional argument): the blurring function
+* `blurring` (optional argument): the blurring kernel
 
 All arguments must be arrays, all with the same size, and all of them in the
 time/space domain (they will be converted to the frequency domain internally
