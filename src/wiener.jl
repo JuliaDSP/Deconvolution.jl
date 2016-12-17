@@ -37,7 +37,7 @@ function _wiener_with_blur(Y::AbstractArray, # Fourier transform of the input
     @assert size(Y) == size(S) == size(N) == size(H)
     # With blurring, the filter is:
     #   H* / (|H|² + |N/S|²)
-    return real(ifft(Y .* conj(H) ./ (abs2(H) .+ N ./ S)))
+    return real(ifft(Y .* conj(H) ./ (abs2.(H) .+ N ./ S)))
 end
 
 ### User interface
@@ -46,8 +46,8 @@ end
 function wiener(input::AbstractArray, signal::AbstractArray,
                 noise::AbstractArray)
     input_ft = fft(input)
-    signal_power_spectrum = abs2(fft(signal))
-    noise_power_spectrum = abs2(fft(noise))
+    signal_power_spectrum = abs2.(fft(signal))
+    noise_power_spectrum = abs2.(fft(noise))
     return _wiener_no_blur(input_ft, signal_power_spectrum,
                            noise_power_spectrum)
 end
@@ -60,8 +60,8 @@ wiener(input::AbstractArray, signal::AbstractArray, noise::Real) =
 function wiener(input::AbstractArray, signal::AbstractArray,
                 noise::AbstractArray, blurring::AbstractArray)
     input_ft = fft(input)
-    signal_power_spectrum = abs2(fft(signal))
-    noise_power_spectrum = abs2(fft(noise))
+    signal_power_spectrum = abs2.(fft(signal))
+    noise_power_spectrum = abs2.(fft(noise))
     blurring_ft = fft(blurring)
     return _wiener_with_blur(input_ft, signal_power_spectrum,
                              noise_power_spectrum, blurring_ft)

@@ -7,7 +7,7 @@ srand(42) # Fixed random seed
 
 # Without blurring
 x = linspace(0, 10, 15)
-s = sinpi(x) - 1.5cos(x)
+s = sinpi.(x) .- 1.5cos.(x)
 n = rand(length(s))
 @test wiener(s + n, s, 0.5) ≈
     [-1.5300909616077885,-0.4607553796475224,-1.73313390900302,0.8555916473930066,
@@ -16,8 +16,8 @@ n = rand(length(s))
      -0.8324097927723406,1.8208048770862535,0.7427114498907227,1.0587917379150844]
 
 # With blurring
-blurring_ft  = exp(-0.001 * (range(-div(length(x), 2), length(x)) .^ 2) .^ (5 // 6))
-blurred_s_ft = fftshift(blurring_ft) .* fft(s) + fft(n)
+blurring_ft  = exp.(-0.001 * (range(-div(length(x), 2), length(x)) .^ 2) .^ (5 // 6))
+blurred_s_ft = fftshift(blurring_ft) .* fft(s) .+ fft(n)
 blurred_s    = real(ifft(blurred_s_ft))
 blurring     = ifft(fftshift(blurring_ft))
 @test wiener(blurred_s, s, 0.5, blurring) ≈

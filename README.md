@@ -2,8 +2,8 @@
 
 | **Documentation**                       | [**Package Evaluator**][pkgeval-link] | **Build Status**                          | **Code Coverage**               |
 |:---------------------------------------:|:-------------------------------------:|:-----------------------------------------:|:-------------------------------:|
-| [![][docs-stable-img]][docs-stable-url] | [![][pkg-0.4-img]][pkg-0.4-url]       | [![Build Status][travis-img]][travis-url] | [![][coveral-img]][coveral-url] |
-| [![][docs-latest-img]][docs-latest-url] | [![][pkg-0.5-img]][pkg-0.5-url]       | [![Build Status][appvey-img]][appvey-url] | [![][codecov-img]][codecov-url] |
+| [![][docs-stable-img]][docs-stable-url] | [![][pkg-0.5-img]][pkg-0.5-url]       | [![Build Status][travis-img]][travis-url] | [![][coveral-img]][coveral-url] |
+| [![][docs-latest-img]][docs-latest-url] | [![][pkg-0.6-img]][pkg-0.6-url]       | [![Build Status][appvey-img]][appvey-url] | [![][codecov-img]][codecov-url] |
 
 Introduction
 ------------
@@ -17,7 +17,7 @@ technical computing.
 Installation
 ------------
 
-`Deconvolution.jl` is available for Julia 0.4 and later versions, and can be
+`Deconvolution.jl` is available for Julia 0.5 and later versions, and can be
 installed with
 [Julia built-in package manager](http://docs.julialang.org/en/stable/manual/packages/).
 In a Julia session run the command
@@ -147,10 +147,10 @@ original author is Mosè Giordano.
 
 [pkgeval-link]: http://pkg.julialang.org/?pkg=Deconvolution
 
-[pkg-0.4-img]: http://pkg.julialang.org/badges/Deconvolution_0.4.svg
-[pkg-0.4-url]: http://pkg.julialang.org/detail/Deconvolution.html
 [pkg-0.5-img]: http://pkg.julialang.org/badges/Deconvolution_0.5.svg
 [pkg-0.5-url]: http://pkg.julialang.org/detail/Deconvolution.html
+[pkg-0.6-img]: http://pkg.julialang.org/badges/Deconvolution_0.6.svg
+[pkg-0.6-url]: http://pkg.julialang.org/detail/Deconvolution.html
 
 [travis-img]: https://travis-ci.org/JuliaDSP/Deconvolution.jl.svg?branch=master
 [travis-url]: https://travis-ci.org/JuliaDSP/Deconvolution.jl

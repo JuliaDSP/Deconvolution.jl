@@ -91,7 +91,7 @@ We first construct the noisy signal:
 
    using LombScargle, Deconvolution, Plots
    t = linspace(0, 10, 1000) # observation times
-   x = sinpi(t) .* cos(5t) - 1.5cospi(t) .* sin(2t) # the original signal
+   x = sinpi(t) .* cos.(5t) .- 1.5cospi.(t) .* sin.(2t) # the original signal
    n = rand(length(x)) # noise to be added
    y = x + 3(n - mean(n)) # observed noisy signal
 
@@ -163,7 +163,7 @@ noise.
     # Create the blurring kernel in frequency domain
     x = hcat(ntuple(x -> collect((1:512) - 257), 512)...)
     k = 0.001
-    blurring_ft = exp(-k*(x .^ 2 + x' .^ 2).^(5//6))
+    blurring_ft = exp.(-k*(x .^ 2 + x' .^ 2).^(5//6))
     # Create additive noise
     noise = rand(size(img))
     # Fourier transform of the blurred image, with additive noise
