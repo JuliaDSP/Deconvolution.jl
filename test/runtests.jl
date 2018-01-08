@@ -1,5 +1,5 @@
 using Deconvolution
-using Base.Test
+using Base.Test, FFTW
 
 srand(42) # Fixed random seed
 
