@@ -53,7 +53,7 @@ end
 
 # Noise as a real (it's converted to an array)
 wiener(input::AbstractArray, signal::AbstractArray, noise::Real) =
-    wiener(input, signal, ones(input)*noise)
+    wiener(input, signal, fill!(similar(input), one(eltype(input)))*noise)
 
 ## With blurring
 function wiener(input::AbstractArray, signal::AbstractArray,
@@ -70,7 +70,7 @@ end
 # Noise as a real (it's converted to an array)
 wiener(input::AbstractArray, signal::AbstractArray,
        noise::Real, blurring::AbstractArray) =
-           wiener(input, signal, ones(input)*noise, blurring)
+           wiener(input, signal, fill!(similar(input), one(eltype(input)))*noise, blurring)
 
 """
     wiener(input, signal, noise[, blurring])

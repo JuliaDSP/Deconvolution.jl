@@ -1,12 +1,12 @@
 using Deconvolution
-using Base.Test, FFTW
+using Test, Random, FFTW
 
-srand(42) # Fixed random seed
+Random.seed!(42) # Fixed random seed
 
 ##### Wiener deconvolution
 
 # Without blurring
-x = linspace(0, 10, 15)
+x = range(0, stop = 10, length = 15)
 s = sinpi.(x) .- 1.5cos.(x)
 n = rand(length(s))
 @test wiener(s + n, s, 0.5) ≈
@@ -16,7 +16,7 @@ n = rand(length(s))
      -0.8324097927723406,1.8208048770862535,0.7427114498907227,1.0587917379150844]
 
 # With blurring
-blurring_ft  = exp.(-0.001 * (range(-div(length(x), 2), length(x)) .^ 2) .^ (5 // 6))
+blurring_ft  = exp.(-0.001 * (range(-div(length(x), 2), length = length(x)) .^ 2) .^ (5 // 6))
 blurred_s_ft = fftshift(blurring_ft) .* fft(s) .+ fft(n)
 blurred_s    = real(ifft(blurred_s_ft))
 blurring     = ifft(fftshift(blurring_ft))

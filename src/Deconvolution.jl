@@ -16,7 +16,6 @@ __precompile__()
 module Deconvolution
 
 using FFTW
-importall FFTW
 
 include("wiener.jl")
 
