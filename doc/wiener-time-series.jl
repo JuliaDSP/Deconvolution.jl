@@ -15,10 +15,10 @@
 #
 ### Code:
 
-srand(7)
+Random.seed!(7)
 
 using LombScargle, Deconvolution, Plots
-t = linspace(0, 10, 1000) # observation times
+t = range(0, stop=10, length=1000) # observation times
 x = sinpi(t) .* cos(5t) - 1.5cospi(t) .* sin(2t) # the original signal
 n = rand(length(x)) # noise to be added
 y = x + 3(n - mean(n)) # observed noisy signal
