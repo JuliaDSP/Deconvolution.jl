@@ -17,7 +17,7 @@
 
 using Images, TestImages, Deconvolution, ImageView
 
-srand(42)
+Random.seed!(42)
 
 # Open the test image
 img = float(data(testimage("cameraman")))'

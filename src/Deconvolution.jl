@@ -11,8 +11,6 @@
 #
 ### Code:
 
-__precompile__()
-
 module Deconvolution
 
 using FFTW
