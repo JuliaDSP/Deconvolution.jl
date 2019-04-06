@@ -1,9 +1,9 @@
 # Deconvolution.jl
 
-| **Documentation**                       | [**Package Evaluator**][pkgeval-link] | **Build Status**                          | **Code Coverage**               |
-|:---------------------------------------:|:-------------------------------------:|:-----------------------------------------:|:-------------------------------:|
-| [![][docs-stable-img]][docs-stable-url] | [![][pkg-0.5-img]][pkg-0.5-url]       | [![Build Status][travis-img]][travis-url] | [![][coveral-img]][coveral-url] |
-| [![][docs-latest-img]][docs-latest-url] | [![][pkg-0.6-img]][pkg-0.6-url]       | [![Build Status][appvey-img]][appvey-url] | [![][codecov-img]][codecov-url] |
+| **Documentation**                       | **Build Status**                          | **Code Coverage**               |
+|:---------------------------------------:|:-----------------------------------------:|:-------------------------------:|
+| [![][docs-stable-img]][docs-stable-url] | [![Build Status][travis-img]][travis-url] | [![][coveral-img]][coveral-url] |
+| [![][docs-latest-img]][docs-latest-url] | [![Build Status][appvey-img]][appvey-url] | [![][codecov-img]][codecov-url] |
 
 Introduction
 ------------
@@ -17,17 +17,16 @@ technical computing.
 Installation
 ------------
 
-`Deconvolution.jl` is available for Julia 0.6 and later versions, and can be
-installed with
-[Julia built-in package manager](http://docs.julialang.org/en/stable/manual/packages/).
-In a Julia session run the command
+The latest version of `Deconvolution.jl` is available for Julia 1.0 and later
+versions, and can be installed with [Julia built-in package
+manager](https://julialang.github.io/Pkg.jl/stable/).  In a Julia session, after
+entering the package manager mode with `]`, run the command
 
 ```julia
-julia> Pkg.update()
-julia> Pkg.add("Deconvolution")
+pkg> add Deconvolution
 ```
 
-Older versions are also available for Julia 0.4 and 0.5.
+Older versions are also available for Julia 0.4-0.7.
 
 ### Documentation
 
@@ -83,18 +82,18 @@ deconvolution of an image, degraded with a blurring function and an additive
 noise.
 
 ``` julia
-using Images, TestImages, Deconvolution, ImageView
+using Images, TestImages, Deconvolution, FFTW, ImageView
 
 # Open the test image
-img = float(data(testimage("cameraman")))'
+img = channelview(testimage("cameraman"))
 # Create the blurring kernel in frequency domain
-x = hcat(ntuple(x -> collect((1:512) - 257), 512)...)
+x = hcat(ntuple(x -> collect((1:512) .- 257), 512)...)
 k = 0.001
-blurring_ft = exp(-k*(x .^ 2 + x' .^ 2).^(5//6))
+blurring_ft = @. exp(-k*(x ^ 2 + x ^ 2)^(5//6))
 # Create additive noise
-noise = rand(size(img))
+noise = rand(Float64, size(img))
 # Fourier transform of the blurred image, with additive noise
-blurred_img_ft = fftshift(blurring_ft) .* fft(img) + fft(noise)
+blurred_img_ft = fftshift(blurring_ft) .* fft(img) .+ fft(noise)
 # Get the blurred image from its Fourier transform
 blurred_img = real(ifft(blurred_img_ft))
 # Get the blurring kernel in the space domain
@@ -107,16 +106,16 @@ polished = wiener(blurred_img, img, noise, blurring)
 # filter only cares about the power spectrum of the signal and the noise, so you
 # don't need to have the exact signal and noise but something with a similar
 # power spectrum.
-img2 = float(data(testimage("livingroom"))) # Load another image
-noise2 = rand(size(img)) # Create another additive noise
+img2 = channelview(testimage("livingroom")) # Load another image
+noise2 = rand(Float64, size(img)) # Create another additive noise
 # Polish the image with Deconvolution deconvolution
 polished2 = wiener(blurred_img, img2, noise2, blurring)
 
-# Compare...
-view(img) # ...the original image
-view(blurred_img) # ...the blurred image
-view(polished) # ...the polished image
-view(polished2) # ...the second polished image
+# # Compare...
+# imshow(img) # ...the original image
+# imshow(blurred_img) # ...the blurred image
+# imshow(polished) # ...the polished image
+# imshow(polished2) # ...the second polished image
 ```
 
 Development
@@ -146,13 +145,6 @@ original author is Mosè Giordano.
 
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-stable-url]: https://deconvolutionjl.readthedocs.io/en/stable/
-
-[pkgeval-link]: http://pkg.julialang.org/?pkg=Deconvolution
-
-[pkg-0.5-img]: http://pkg.julialang.org/badges/Deconvolution_0.5.svg
-[pkg-0.5-url]: http://pkg.julialang.org/detail/Deconvolution.html
-[pkg-0.6-img]: http://pkg.julialang.org/badges/Deconvolution_0.6.svg
-[pkg-0.6-url]: http://pkg.julialang.org/detail/Deconvolution.html
 
 [travis-img]: https://travis-ci.org/JuliaDSP/Deconvolution.jl.svg?branch=master
 [travis-url]: https://travis-ci.org/JuliaDSP/Deconvolution.jl
