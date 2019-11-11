@@ -28,3 +28,25 @@ end
          -1.6455701546601862,-0.4926325667795202,-1.0323127293402468,
          -0.8380228416032021,1.8214493186523952,0.7447075584686396,1.0566048110361044]
 end
+
+##### Richardson-Lucy deconvolution
+
+@testset "Richardson-Lucy deconvolution tests" begin
+    k=-0.001
+    blurring_ft  = exp.(-k * (range(-div(length(x), 2), length = length(x)) .^ 2) .^ (5 // 6))
+    blurred_s_ft = fftshift(blurring_ft) .* fft(s)
+    blurred_s    = real(ifft(blurred_s_ft))
+    blurring     = ifft(fftshift(blurring_ft))
+
+    estimated = lucy(blurred_s, blurring, iterations=1)
+
+    @test sum(abs.(s .- estimated)) < sum(abs.(s .- blurred_s))
+
+    k =-0.0015 # should improve also when blur params are not perfectly estimated 
+    blurring_ft  = exp.(-k * (range(-div(length(x), 2), length = length(x)) .^ 2) .^ (5 // 6))
+    blurring     = ifft(fftshift(blurring_ft))
+
+    estimated = lucy(blurred_s, blurring, iterations=1)
+
+    @test sum(abs.(s .- estimated)) < sum(abs.(s .- blurred_s))
+end

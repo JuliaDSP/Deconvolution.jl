@@ -16,5 +16,6 @@ module Deconvolution
 using FFTW
 
 include("wiener.jl")
+include("lucy.jl")
 
 end # module
