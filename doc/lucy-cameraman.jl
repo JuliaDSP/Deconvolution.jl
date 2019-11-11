@@ -1,6 +1,6 @@
 ### lucy-cameraman.jl
 #
-# Copyright (C) 2016 Jakub Wronowski.
+# Copyright (C) 2019 Jakub Wronowski.
 #
 # Maintainer: Mosè Giordano <mose AT gnu DOT org>
 # Keywords: deconvolution, signal processing
