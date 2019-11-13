@@ -23,7 +23,7 @@ img = channelview(testimage("cameraman"))
 
 (N, M) = size(img)
 @assert N == M
-@assert floor(log2(N)) == ceil(log2(N)) # ensure size is power of 2
+@assert ispow2(N) # ensure size is power of 2
 
 x = reshape(repeat(-N÷2:N÷2-1, M), (N,M))
 k = 0.001
