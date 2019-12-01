@@ -78,10 +78,9 @@ approximation in the case of
 lucy(observed, psf[, iterations])
 ```
 
-The [Richardson-Lucy deconvolution]
-(https://en.wikipedia.org/wiki/Richardson-Lucy_deconvolution) is an
-iterative method based on Bayesian inference for restoration of signal that
-is convolved with a point spread function.
+The [Richardson-Lucy deconvolution](https://en.wikipedia.org/wiki/Richardson-Lucy_deconvolution)
+is an iterative method based on Bayesian inference for restoration of signal
+that is convolved with a point spread function.
 
 The `lucy` function can be used to apply the Richardson-Lucy deconvolution
 method to a digital signal. The arguments are:
