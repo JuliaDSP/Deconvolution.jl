@@ -6,7 +6,6 @@ using ZernikePolynomials #https://github.com/rdoelman/ZernikePolynomials.jl
 img = channelview(testimage("cameraman"))
 
 blurring = evaluateZernike(LinRange(-16,16,512), [12, 4, 0], [1.0, -1.0, 2.0], index=:OSA)
-blurring = blurring ./ maximum(blurring)
 blurring = fftshift(blurring)
 blurring = blurring ./ sum(blurring)
 

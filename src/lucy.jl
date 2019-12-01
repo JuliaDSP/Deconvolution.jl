@@ -17,7 +17,7 @@
 
 export lucy
 
-function lucy(observed::AbstractArray, psf::AbstractArray; iterations::Integer=8)
+function lucy(observed::AbstractArray, psf::AbstractArray; iterations::Integer = 1)
     @assert size(observed) == size(psf)
     @assert iterations >= 0
 
@@ -39,7 +39,7 @@ end
 """
     lucy(observed, psf[, iterations])
 
-Return the Richardson-Lucy deconvolution of `observed`, using the point spread
+Returns the Richardson-Lucy deconvolution of `observed`, using the point spread
 function `psf`.
 
 All arguments must be arrays in the time/space domain and all of the same size,
