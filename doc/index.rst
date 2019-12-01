@@ -224,7 +224,7 @@ Blurred image
 '''''''''''''''''
 
 Here is an example of use of :func:`lucy` function to perform the Richardson-Lucy
-deconvolution of an image convolved with point spread function that models licensed
+deconvolution of an image convolved with point spread function that models lens
 aberration.
 
 .. code-block:: julia
