@@ -27,7 +27,7 @@ Older versions are also available for Julia 0.4-0.7.
 
 ## Usage
 
-Currently `Deconvolution.jl` provides only two methods, but others will
+Currently `Deconvolution.jl` provides only one methd, but others will
 hopefully come in the future.
 
 ### `wiener` function
@@ -44,7 +44,7 @@ Theoretically, the Wiener deconvolution method requires the knowledge of
 the original signal, the blurring function, and the noise. However,
 these conditions are difficult to met (and, of course, if you know the
 original signal you do not need to perform a deconvolution in order to
-recover the signal itself), but a strength of the Wiener deconvolution
+recover the signal itself), but a strenght of the Wiener deconvolution
 is that it works in the frequency domain, so you only need to know with
 good precision the power spectra of the signal and the noise. In
 addition, most signals of the same class have fairly similar power
@@ -73,25 +73,6 @@ internally using `fft` function). Argument `noise` can be also a real
 number, in which case a constant noise with that value will be assumed
 (this is a good approximation in the case of [white
 noise](https://en.wikipedia.org/wiki/White_noise)).
-
-### `lucy` function
-
-The [Richardson-Lucy deconvolution](https://en.wikipedia.org/wiki/Richardson-Lucy_deconvolution)
-is an iterative method based on Bayesian inference for restoration of signal
-that is convolved with a point spread function.
-
-The `lucy` function can be used to apply the Richardson-Lucy deconvolution
-method to a digital signal. The arguments are:
-
--   `observed`: the digital signal
--   `psf`: the point spread function
--   `iterations` (optional argument): the number of iterations
-
-First two arguments must be arrays, all with the same size, and all of them
-in the time/space domain (they will be converted to the frequency domain
-internally using `fft` function). Argument `iterations` is an integer number.
-The more iterations is specified the better result should be if the solution
-converges and it is going to converge if psf is estimated well.
 
 ## Examples
 
@@ -210,37 +191,6 @@ view(polished2) # ...the second polished image
 ```
 
 ![image](wiener-cameraman.jpg)
-
-### Richardson-Lucy deconvolution
-
-#### Blurred image
-
-Here is an example of use of `lucy` function to perform the Richardson-Lucy
-deconvolution of an image convolved with point spread function that models lens
-aberration.
-
-``` {.sourceCode .julia}
-    using Images, TestImages, Deconvolution, FFTW, ZernikePolynomials, ImageView
-
-    img = channelview(testimage("cameraman"))
-
-    # model of lens aberration
-    blurring = evaluateZernike(LinRange(-16,16,512), [12, 4, 0], [1.0, -1.0, 2.0], index=:OSA)
-    blurring = fftshift(blurring)
-    blurring = blurring ./ sum(blurring)
-
-    blurred_img = fft(img) .* fft(blurring) |> ifft |> real
-
-    @time restored_img_200 = lucy(blurred_img, blurring, iterations=200)
-    @time restored_img_2000 = lucy(blurred_img, blurring, iterations=2000)
-
-    imshow(img)
-    imshow(blurred_img)
-    imshow(restored_img_200)
-    imshow(restored_img_2000)
-```
-
-![image](lucy-cameraman.jpg)
 
 ## Development
 
