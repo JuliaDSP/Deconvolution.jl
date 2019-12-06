@@ -72,6 +72,29 @@ case a constant noise with that value will be assumed (this is a good
 approximation in the case of
 [white noise](https://en.wikipedia.org/wiki/White_noise)).
 
+### `lucy`
+
+```julia
+lucy(observed, psf[, iterations])
+```
+
+The [Richardson-Lucy deconvolution](https://en.wikipedia.org/wiki/Richardson-Lucy_deconvolution)
+is an iterative method based on Bayesian inference for restoration of signal
+that is convolved with a point spread function.
+
+The `lucy` function can be used to apply the Richardson-Lucy deconvolution
+method to a digital signal. The arguments are:
+
+* `observed`: the observed blurred signal
+* `psf`: the point spread function (the blurring kernel)
+* `iterations` (optional argument): the number of iterations
+
+First two arguments must be arrays, all with the same size, and all of them
+in the time/space domain (they will be converted to the frequency domain
+internally using `fft` function).  Argument `iterations` is an integer number.
+The more iterations is specified the better result should be if the solution
+converges and it is going to converge if PSF is estimated well.
+
 Examples
 --------
 
@@ -116,6 +139,30 @@ polished2 = wiener(blurred_img, img2, noise2, blurring)
 # imshow(blurred_img) # ...the blurred image
 # imshow(polished) # ...the polished image
 # imshow(polished2) # ...the second polished image
+```
+### Richardson-Lucy deconvolution
+
+Here is an example of use of `lucy` function to perform the Richardson-Lucy
+deconvolution of an image blurred by kernel that models spherical lens aberration.
+
+``` julia
+using Images, TestImages, Deconvolution, FFTW, ZernikePolynomials, ImageView
+
+img = channelview(testimage("cameraman"))
+
+# model of lens aberration
+blurring = evaluateZernike(LinRange(-16,16,512), [12, 4, 0], [1.0, -1.0, 2.0], index=:OSA)
+blurring = fftshift(blurring)
+blurring = blurring ./ sum(blurring)
+
+blurred_img = fft(img) .* fft(blurring) |> ifft |> real
+
+@time restored_img = lucy(blurred_img, blurring, iterations=1000)
+
+imshow(img)
+imshow(blurring)
+imshow(blurred_img)
+imshow(restored_img)
 ```
 
 Development
