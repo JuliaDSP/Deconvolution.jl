@@ -93,7 +93,7 @@ First two arguments must be arrays, all with the same size, and all of them
 in the time/space domain (they will be converted to the frequency domain
 internally using `fft` function).  Argument `iterations` is an integer number.
 The more iterations is specified the better result should be if the solution
-converges (it is going to converge if psf is estimated well).
+converges and it is going to converge if PSF is estimated well.
 
 Examples
 --------
