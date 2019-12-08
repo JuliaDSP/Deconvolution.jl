@@ -32,9 +32,7 @@ Older versions are also available for Julia 0.4-0.7.
 
 The complete manual of `Deconvolution.jl` is available at
 [the documentation page][docs-stable-url]. It has more detailed explanation of
-the methods used and the examples are complemented with pictures. You can also
-download the PDF version of the manual from
-https://media.readthedocs.org/pdf/deconvolutionjl/latest/deconvolutionjl.pdf.
+the methods used and the examples are complemented with pictures.
 
 Usage
 -----
