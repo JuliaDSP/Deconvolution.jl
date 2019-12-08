@@ -31,15 +31,13 @@ Older versions are also available for Julia 0.4-0.7.
 ### Documentation
 
 The complete manual of `Deconvolution.jl` is available at
-http://deconvolutionjl.readthedocs.io.  It has more detailed explanation of the
-methods used and the examples are complemented with pictures.  You can also
-download the PDF version of the manual from
-https://media.readthedocs.org/pdf/deconvolutionjl/latest/deconvolutionjl.pdf.
+[the documentation page][docs-stable-url]. It has more detailed explanation of
+the methods used and the examples are complemented with pictures.
 
 Usage
 -----
 
-Currently `Deconvolution.jl` provides only one methd, but others will come in
+Currently `Deconvolution.jl` provides only two methods, but others will come in
 the future.
 
 ### `wiener`
@@ -188,7 +186,7 @@ original author is Mosè Giordano.
 
 
 [docs-latest-img]: https://img.shields.io/badge/docs-latest-blue.svg
-[docs-latest-url]: https://deconvolutionjl.readthedocs.io/en/latest/
+[docs-latest-url]: https://juliadsp.github.io/Deconvolution.jl/dev/
 
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-stable-url]: https://deconvolutionjl.readthedocs.io/en/stable/
