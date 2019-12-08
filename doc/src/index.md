@@ -154,9 +154,9 @@ plot!(t, polished, label="Recovered with Wiener") # ...original and recovered si
 plot!(t, signal, label="Lomb–Scargle model") #...and best fitting Lomb–Scargle model
 ```
 
-![image](wiener-time-series-observed.png)
+![image](wiener/time-series-observed.png)
 
-![image](wiener-time-series-recovered.png)
+![image](wiener/time-series-recovered.png)
 
 Note that the signal recovered with the Wiener deconvolution is
 generally a good improvement with respect to the best-fitting
@@ -209,7 +209,13 @@ view(polished) # ...the polished image
 view(polished2) # ...the second polished image
 ```
 
-![image](wiener-cameraman.jpg)
+| Original image                                     | Blurred image                                              |
+| :------------------------------------------------- | :--------------------------------------------------------- |
+| ![](wiener/original.jpg)                           | ![](wiener/blurred.jpg)                                    |
+
+| Image restored with exact power spectrum and noise | Image restored with imperfect reference noise and spectrum |
+| :------------------------------------------------- | :--------------------------------------------------------- |
+| ![](wiener/polished.jpg)                           | ![](wiener/polished2.jpg)                                  |
 
 ### Richardson-Lucy deconvolution
 
@@ -240,7 +246,14 @@ aberration.
     imshow(restored_img_2000)
 ```
 
-![image](lucy-cameraman.jpg)
+| Original image                     | Blurred image                    |
+| :--------------------------------- | :------------------------------- |
+| ![](lucy/original.jpg)             | ![](lucy/blurred.jpg)            |
+
+| Result of 200 `lucy` iterations    | Result of 2000 `lucy` iterations |
+| :--------------------------------- | :--------------------------------|
+| ![](lucy/restored_200.jpg)         | ![](lucy/restored_2000.jpg)      |
+
 
 ## Development
 

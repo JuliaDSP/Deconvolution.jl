@@ -16,8 +16,7 @@ blurred_img = fft(img) .* fft(blurring) |> ifft |> real
 
 (N, M) = size(blurred_img)
 
-out = ((vcat(hcat(img, ones(M, 20), blurred_img),
-             ones(20, 2M+20),
-             hcat(result_200_iterations, ones(M, 20), result_2000_iterations))))
-
-save("lucy-cameraman.jpg", Images.clamp01nan.(out))
+save("original.jpg", Images.clamp01nan.(img))
+save("blurred.jpg", Images.clamp01nan.(blurred_img))
+save("restored_200.jpg", Images.clamp01nan.(result_200_iterations))
+save("restored_2000.jpg", Images.clamp01nan.(result_2000_iterations))
