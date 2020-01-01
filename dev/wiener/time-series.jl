@@ -15,13 +15,15 @@
 #
 ### Code:
 
+using Random
+
 Random.seed!(7)
 
-using LombScargle, Deconvolution, Plots
+using LombScargle, Deconvolution, Plots, Statistics
 t = range(0, stop=10, length=1000) # observation times
-x = sinpi(t) .* cos(5t) - 1.5cospi(t) .* sin(2t) # the original signal
+x = sinpi.(t) .* cos.(5t) - 1.5cospi.(t) .* sin.(2t) # the original signal
 n = rand(length(x)) # noise to be added
-y = x + 3(n - mean(n)) # observed noisy signal
+y = x + 3(n .- mean(n)) # observed noisy signal
 # Lomb-Scargle periodogram
 p = lombscargle(t, y, maximum_frequency=2, samples_per_peak=10)
 plot(freqpower(p)...)
@@ -35,8 +37,8 @@ noise = rand(length(y)) # noise for `wiener`
 polished = wiener(y, signal, noise)
 plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
 plot!(t, y, label="Observed signal")
-savefig("wiener-time-series-observed.png")
+savefig("time-series-observed.png")
 plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
 plot!(t, polished, label="Recovered with Wiener")
 plot!(t, signal, label="Lomb–Scargle model")
-savefig("wiener-time-series-recovered.png")
+savefig("time-series-recovered.png")
