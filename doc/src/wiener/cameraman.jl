@@ -46,7 +46,7 @@ noise2 = rand(Float64, size(img)) # Create another additive noise
 # Polish the image with Deconvolution deconvolution
 polished2 = wiener(blurred_img, img2, noise2, blurring)
 
-out = ((vcat(hcat(img, ones(512, 20), blurred_img),
-             ones(20, 1024+20),
-             hcat(polished, ones(512, 20), polished2))))
-save("wiener-cameraman.jpg", Images.clamp01nan.(out))
+save("original.jpg", Images.clamp01nan.(img))
+save("blurred.jpg", Images.clamp01nan.(blurred_img))
+save("polished.jpg", Images.clamp01nan.(polished))
+save("polished2.jpg", Images.clamp01nan.(polished2))
