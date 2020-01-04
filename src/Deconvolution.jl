@@ -17,5 +17,6 @@ using FFTW
 
 include("wiener.jl")
 include("lucy.jl")
+include("fermat.jl")
 
 end # module

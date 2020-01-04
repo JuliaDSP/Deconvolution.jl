@@ -5,6 +5,8 @@ version = "0.3.0"
 
 [deps]
 FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
+NumberTheoreticTransforms = "8497c1d1-af72-4391-8d22-bdd566511a1c"
+SpecialMatrices = "928aab9d-ef52-54ac-8ca1-acd7ca42c160"
 
 [compat]
 FFTW = "0.0, 0.1, 0.2, 0.3, 1"
