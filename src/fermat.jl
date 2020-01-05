@@ -23,7 +23,7 @@ function fermat(convolved::AbstractArray{T, 1}, h::AbstractArray{T, 1}, g::T, q:
     X0 = mod.(H_inv .* YM, q)
     xm = ifnt(X0, g, q)
     x0 = mod.(Dm * xm, q)
-    x0[x0 .>= bias] = x0[x0 .>= bias] .- q
+    x0[x0 .>= bias] .-= q
     x = x0
     y_prim = hh * x0
     @assert rem.(ym * D - y_prim, q) == zeros(T, N)
@@ -34,7 +34,7 @@ function fermat(convolved::AbstractArray{T, 1}, h::AbstractArray{T, 1}, g::T, q:
         YM = fnt(ym, g, q)
         Xj = H_inv .* YM
         xj = ifnt(Xj, g, q)
-        xj[xj .>= bias] = xj[xj .>= bias] .- q
+        xj[xj .>= bias] .-= q
         x = x .+ (xj * q^j)
         y_prim = hh * xj
         @assert rem.(y - y_prim, q) == zeros(T, N)
