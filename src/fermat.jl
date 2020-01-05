@@ -3,6 +3,8 @@ using NumberTheoreticTransforms
 using LinearAlgebra
 using SpecialMatrices
 
+export fermat
+
 """
     fermat(convolved, kernel)
 
@@ -10,7 +12,7 @@ Calculates deconvolution with Number Theoretic Transform.
 """
 function fermat(convolved::AbstractArray{T, 1}, h::AbstractArray{T, 1}, g::T, q::T) where {T<:Integer}
     N = length(convolved)
-    bias = div(q-1, 2) + 1 #negative numbers represeted by the upper half of [0, q) range
+    bias = div(q-1, 2) + 1 #negative numbers are represeted by the upper half of [0, q) range
     H = fnt(h, g, q)
     H_inv = invmod.(H, q)
     hh = Circulant(h)
