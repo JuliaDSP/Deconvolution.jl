@@ -4,7 +4,7 @@ using NumberTheoreticTransforms
 export fermat
 
 """
-    fermat(convolved, kernel)
+    fermat(convolved, h, g, q)
 
 Calculates deconvolution with Number Theoretic Transform.
 """
