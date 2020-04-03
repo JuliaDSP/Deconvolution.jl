@@ -52,8 +52,14 @@ function wiener(input::AbstractArray, signal::AbstractArray,
 end
 
 # Noise as a real (it's converted to an array)
-wiener(input::AbstractArray, signal::AbstractArray, noise::Real) =
-    wiener(input, signal, fill!(similar(input), one(eltype(input)))*noise)
+function wiener(input::AbstractArray, signal::AbstractArray, noise::Real)
+    @assert size(input) == size(signal)
+    input_ft = fft(input)
+    signal_power_spectrum = abs2.(fft(signal))
+    noise_power_spectrum = noise .* ones(eltype(input), size(input))
+    return _wiener_no_blur(input_ft, signal_power_spectrum,
+                           noise_power_spectrum)
+end
 
 ## With blurring
 function wiener(input::AbstractArray, signal::AbstractArray,
@@ -68,9 +74,17 @@ function wiener(input::AbstractArray, signal::AbstractArray,
 end
 
 # Noise as a real (it's converted to an array)
-wiener(input::AbstractArray, signal::AbstractArray,
-       noise::Real, blurring::AbstractArray) =
-           wiener(input, signal, fill!(similar(input), one(eltype(input)))*noise, blurring)
+function wiener(input::AbstractArray, signal::AbstractArray,
+                noise::Real, blurring::AbstractArray)
+    @assert size(input) == size(signal) == size(blurring)
+    input_ft = fft(input)
+    signal_power_spectrum = abs2.(fft(signal))
+    noise_power_spectrum = noise .* ones(eltype(input), size(input))
+    blurring_ft = fft(blurring)
+    return _wiener_with_blur(input_ft, signal_power_spectrum,
+                             noise_power_spectrum, blurring_ft)
+end
+
 
 """
     wiener(input, signal, noise[, blurring])
