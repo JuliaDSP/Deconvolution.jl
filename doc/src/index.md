@@ -105,11 +105,11 @@ series.
 We first construct the noisy signal:
 
 ``` {.sourceCode .julia}
-using LombScargle, Deconvolution, Plots
-t = linspace(0, 10, 1000) # observation times
-x = sinpi(t) .* cos.(5t) .- 1.5cospi.(t) .* sin.(2t) # the original signal
+using LombScargle, Deconvolution, Plots, Statistics
+t = range(0, stop=10, length=1000) # observation times
+x = sinpi.(t) .* cos.(5t) - 1.5cospi.(t) .* sin.(2t) # the original signal
 n = rand(length(x)) # noise to be added
-y = x + 3(n - mean(n)) # observed noisy signal
+y = x + 3(n .- mean(n)) # observed noisy signal
 ```
 
 In order to perform the Wiener deconvolution, we need a signal that has
@@ -146,12 +146,13 @@ wiener with a simple signal that is the sum of these three models:
 signal = m1 + m2 + m3 # signal for `wiener`
 noise = rand(length(y)) # noise for `wiener`
 polished = wiener(y, signal, noise)
-# Compare...
 plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
-plot!(t, y, label="Observed signal") # ...original and observed signal
+plot!(t, y, label="Observed signal")
+savefig("time-series-observed.png")
 plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
-plot!(t, polished, label="Recovered with Wiener") # ...original and recovered signal
-plot!(t, signal, label="Lomb–Scargle model") #...and best fitting Lomb–Scargle model
+plot!(t, polished, label="Recovered with Wiener")
+plot!(t, signal, label="Lomb–Scargle model")
+savefig("time-series-recovered.png")
 ```
 
 ![image](wiener/time-series-observed.png)
