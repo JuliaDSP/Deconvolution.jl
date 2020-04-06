@@ -167,6 +167,44 @@ With real-world data the Lomb–Scargle periodogram may not work as good
 as in this toy-example, but we showed a possible strategy to create a
 suitable signal to use with wiener function.
 
+#### Blurred noisy time series
+Additionally to noise, also a blurring kernel can applied to the image.
+First we define the blurring kernel as a Gaussian kernel.
+Using `ifftshift` we move the center to index position 1 which is required
+for the Wiener deconvolution algorithm.
+
+``` {.sourceCode .julia}
+# Gaussian blurring kernel
+kernel = exp.( - 10 .* (t .- 5).^2)
+kernel ./= sum(kernel) # normalize kernel to sum of 1
+kernel = ifftshift(kernel) # move center to index pos 1
+```
+
+The blurring can be applied simply in Fourier space. After the blurring we
+add the noise.
+
+``` {.sourceCode .julia}
+y_blurred = real(ifft(fft(kernel) .* fft(x))) + noise
+```
+
+The deblurred image can be obtained with the following call.
+
+``` {.sourceCode .julia}
+deblurred = wiener(y_blurred, signal, noise, kernel)
+```
+
+Additionally to the `noise` array we also pass `kernel` to `wiener`.
+
+``` {.sourceCode .julia}
+plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
+plot!(t, deblurred, label="Deblurred with Wiener")
+savefig("time-series-deblurred.png")
+```
+
+![image](wiener/time-series-observed-blurred.png)
+
+![image](wiener/time-series-deblurred.png)
+
 #### Blurred image
 
 Here is an example of use of wiener function to perform the Wiener

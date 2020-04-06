@@ -45,7 +45,7 @@ m3 = LombScargle.model(t, y, findmaxfreq(p, [1, 1.5])[1]) # third model
 
 signal = m1 + m2 + m3
 polished = wiener(y, signal, noise)
-deblurred = wiener(y_blurred, signal,  noise, kernel)
+deblurred = wiener(y_blurred, signal, noise, kernel)
 
 # Plots 
 plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
@@ -63,4 +63,5 @@ savefig("time-series-recovered.png")
 
 plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
 plot!(t, deblurred, label="Deblurred with Wiener")
+plot!(t, signal, label="Lomb–Scargle model")
 savefig("time-series-deblurred.png")
