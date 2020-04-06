@@ -241,20 +241,34 @@ noise2 = rand(size(img)) # Create another additive noise
 # Polish the image with Deconvolution deconvolution
 polished2 = wiener(blurred_img, img2, noise2, blurring)
 
+# Wiener also works using a real number instead of a noise array
+polished3 = wiener(blurred_img, img2, 1000, blurring)
+polished4 = wiener(blurred_img, img2, 10000, blurring)
+
+
 # Compare...
 view(img) # ...the original image
 view(blurred_img) # ...the blurred image
 view(polished) # ...the polished image
 view(polished2) # ...the second polished image
+view(polished3) # ...the third polished image
+view(polished4) # ...the fourth polished image
 ```
 
-| Original image                                     | Blurred image                                              |
-| :------------------------------------------------- | :--------------------------------------------------------- |
-| ![](wiener/original.jpg)                           | ![](wiener/blurred.jpg)                                    |
+| Original image                                            | Blurred image                                              |
+| :-------------------------------------------------        | :--------------------------------------------------------- |
+| ![](wiener/original.jpg)                                  | ![](wiener/blurred.jpg)                                    |
 
-| Image restored with exact power spectrum and noise | Image restored with imperfect reference noise and spectrum |
-| :------------------------------------------------- | :--------------------------------------------------------- |
-| ![](wiener/polished.jpg)                           | ![](wiener/polished2.jpg)                                  |
+| Image restored with exact power spectrum and noise        | Image restored with imperfect reference noise and spectrum |
+| :-------------------------------------------------        | :--------------------------------------------------------- |
+| ![](wiener/polished.jpg)                                  | ![](wiener/polished2.jpg)                                  |
+
+| Image restored with imperfect spectrum and constant noise | Image restored with imperfect spectrum and constant noise  |
+| :-------------------------------------------------------- | :--------------------------------------------------------- |
+| ![](wiener/polished3.jpg)                                 | ![](wiener/polished4.jpg)                                  |
+
+
+Without knowing the noise array exactly the contrast drops significantly. Some postprocessing of the contrast can enhance the quality further.
 
 ### Richardson-Lucy deconvolution
 

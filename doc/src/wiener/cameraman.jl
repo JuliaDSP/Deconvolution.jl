@@ -45,8 +45,13 @@ img2 = channelview(testimage("livingroom")) # Load another image
 noise2 = rand(Float64, size(img)) # Create another additive noise
 # Polish the image with Deconvolution deconvolution
 polished2 = wiener(blurred_img, img2, noise2, blurring)
+# Wiener also works using a real number instead of a noise array
+polished3 = 0.5 .* wiener(blurred_img, img2, 1000, blurring)
+polished4 = 0.5 .* wiener(blurred_img, img2, 10000, blurring)
 
 save("original.jpg", Images.clamp01nan.(img))
 save("blurred.jpg", Images.clamp01nan.(blurred_img))
 save("polished.jpg", Images.clamp01nan.(polished))
 save("polished2.jpg", Images.clamp01nan.(polished2))
+save("polished3.jpg", Images.clamp01nan.(polished3))
+save("polished4.jpg", Images.clamp01nan.(polished4))
