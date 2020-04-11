@@ -105,11 +105,11 @@ series.
 We first construct the noisy signal:
 
 ``` {.sourceCode .julia}
-using LombScargle, Deconvolution, Plots
-t = linspace(0, 10, 1000) # observation times
-x = sinpi(t) .* cos.(5t) .- 1.5cospi.(t) .* sin.(2t) # the original signal
+using LombScargle, Deconvolution, Plots, Statistics
+t = range(0, stop=10, length=1000) # observation times
+x = sinpi.(t) .* cos.(5t) - 1.5cospi.(t) .* sin.(2t) # the original signal
 n = rand(length(x)) # noise to be added
-y = x + 3(n - mean(n)) # observed noisy signal
+y = x + 3(n .- mean(n)) # observed noisy signal
 ```
 
 In order to perform the Wiener deconvolution, we need a signal that has
@@ -146,12 +146,13 @@ wiener with a simple signal that is the sum of these three models:
 signal = m1 + m2 + m3 # signal for `wiener`
 noise = rand(length(y)) # noise for `wiener`
 polished = wiener(y, signal, noise)
-# Compare...
 plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
-plot!(t, y, label="Observed signal") # ...original and observed signal
+plot!(t, y, label="Observed signal")
+savefig("time-series-observed.png")
 plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
-plot!(t, polished, label="Recovered with Wiener") # ...original and recovered signal
-plot!(t, signal, label="Lomb–Scargle model") #...and best fitting Lomb–Scargle model
+plot!(t, polished, label="Recovered with Wiener")
+plot!(t, signal, label="Lomb–Scargle model")
+savefig("time-series-recovered.png")
 ```
 
 ![image](wiener/time-series-observed.png)
@@ -165,6 +166,44 @@ Lomb–Scargle model obtained using a few frequencies.
 With real-world data the Lomb–Scargle periodogram may not work as good
 as in this toy-example, but we showed a possible strategy to create a
 suitable signal to use with wiener function.
+
+#### Blurred noisy time series
+Additionally to noise, also a blurring kernel can applied to the image.
+First we define the blurring kernel as a Gaussian kernel.
+Using `ifftshift` we move the center to index position 1 which is required
+for the Wiener deconvolution algorithm.
+
+``` {.sourceCode .julia}
+# Gaussian blurring kernel
+kernel = exp.( - 10 .* (t .- 5).^2)
+kernel ./= sum(kernel) # normalize kernel to sum of 1
+kernel = ifftshift(kernel) # move center to index pos 1
+```
+
+The blurring can be applied simply in Fourier space. After the blurring we
+add the noise.
+
+``` {.sourceCode .julia}
+y_blurred = real(ifft(fft(kernel) .* fft(x))) + noise
+```
+
+The deblurred image can be obtained with the following call.
+
+``` {.sourceCode .julia}
+deblurred = wiener(y_blurred, signal, noise, kernel)
+```
+
+Additionally to the `noise` array we also pass `kernel` to `wiener`.
+
+``` {.sourceCode .julia}
+plot(t, x, size=(900, 600), label="Original signal", linewidth=2)
+plot!(t, deblurred, label="Deblurred with Wiener")
+savefig("time-series-deblurred.png")
+```
+
+![image](wiener/time-series-observed-blurred.png)
+
+![image](wiener/time-series-deblurred.png)
 
 #### Blurred image
 
@@ -202,20 +241,34 @@ noise2 = rand(size(img)) # Create another additive noise
 # Polish the image with Deconvolution deconvolution
 polished2 = wiener(blurred_img, img2, noise2, blurring)
 
+# Wiener also works using a real number instead of a noise array
+polished3 = wiener(blurred_img, img2, 1000, blurring)
+polished4 = wiener(blurred_img, img2, 10000, blurring)
+
+
 # Compare...
 view(img) # ...the original image
 view(blurred_img) # ...the blurred image
 view(polished) # ...the polished image
 view(polished2) # ...the second polished image
+view(polished3) # ...the third polished image
+view(polished4) # ...the fourth polished image
 ```
 
-| Original image                                     | Blurred image                                              |
-| :------------------------------------------------- | :--------------------------------------------------------- |
-| ![](wiener/original.jpg)                           | ![](wiener/blurred.jpg)                                    |
+| Original image                                            | Blurred image                                              |
+| :-------------------------------------------------        | :--------------------------------------------------------- |
+| ![](wiener/original.jpg)                                  | ![](wiener/blurred.jpg)                                    |
 
-| Image restored with exact power spectrum and noise | Image restored with imperfect reference noise and spectrum |
-| :------------------------------------------------- | :--------------------------------------------------------- |
-| ![](wiener/polished.jpg)                           | ![](wiener/polished2.jpg)                                  |
+| Image restored with exact power spectrum and noise        | Image restored with imperfect reference noise and spectrum |
+| :-------------------------------------------------        | :--------------------------------------------------------- |
+| ![](wiener/polished.jpg)                                  | ![](wiener/polished2.jpg)                                  |
+
+| Image restored with imperfect spectrum and constant noise | Image restored with imperfect spectrum and constant noise  |
+| :-------------------------------------------------------- | :--------------------------------------------------------- |
+| ![](wiener/polished3.jpg)                                 | ![](wiener/polished4.jpg)                                  |
+
+
+Without knowing the noise array exactly the contrast drops significantly. Some postprocessing of the contrast can enhance the quality further.
 
 ### Richardson-Lucy deconvolution
 
