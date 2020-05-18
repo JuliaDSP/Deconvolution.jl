@@ -28,7 +28,7 @@ function lucy(observed::AbstractArray, psf::AbstractArray; iterations::Integer =
         return e .* real(ifft(fft(observed ./ ifft(fft(e) .* psf_ft)) .* psf_ft_conj)) 
     end
 
-    estimated = observed
+    estimated = real(ifft(fft(observed) .* psf_ft))
     for i in 1:iterations
         estimated = lucystep(estimated)
     end
