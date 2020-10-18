@@ -189,7 +189,7 @@ original author is Mosè Giordano.
 [docs-latest-url]: https://juliadsp.github.io/Deconvolution.jl/dev/
 
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
-[docs-stable-url]: https://juliadsp.github.io/Deconvolution.jl/dev/
+[docs-stable-url]: https://juliadsp.github.io/Deconvolution.jl/stable/
 
 [travis-img]: https://travis-ci.org/JuliaDSP/Deconvolution.jl.svg?branch=master
 [travis-url]: https://travis-ci.org/JuliaDSP/Deconvolution.jl
