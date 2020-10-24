@@ -64,3 +64,25 @@ end
 
     @test sum(abs.(s .- estimated)) < sum(abs.(s .- blurred_s))
 end
+
+##### Fermat Number Transform deconvolution
+
+@testset "Fermat Number Transform deconvolution tests" begin
+    using SpecialMatrices
+
+    h = [3, 2, 0, 0]
+    y = [3, 5, 3, 0]
+    x = fermat(y, h, 4, 17)
+    @test Circulant(h) * x == y
+
+    h = [4, 3, 1, 1, 1, 0, 0, 0]
+    y = [4, 2, 5, 1, 4, 2, 1, 3]
+    x = fermat(y, h, 2, 17)
+    @test Circulant(h) * x == y
+
+    h = [3, 2, 0, 0]
+    y = [11, 8, 13, 18]
+    x = fermat(y, h, 4, 17)
+    @test Circulant(h) * x == y
+
+end
