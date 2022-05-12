@@ -107,9 +107,9 @@ We first construct the noisy signal:
 ``` {.sourceCode .julia}
 using LombScargle, Deconvolution, Plots, Statistics
 t = range(0, stop=10, length=1000) # observation times
-x = sinpi.(t) .* cos.(5t) - 1.5cospi.(t) .* sin.(2t) # the original signal
+x = sinpi.(t) .* cos.(5 .* t) - 1.5 .* cospi.(t) .* sin.(2 .* t) # the original signal
 n = rand(length(x)) # noise to be added
-y = x + 3(n .- mean(n)) # observed noisy signal
+y = x .+ 3 .* (n .- mean(n)) # observed noisy signal
 ```
 
 In order to perform the Wiener deconvolution, we need a signal that has
@@ -175,7 +175,7 @@ for the Wiener deconvolution algorithm.
 
 ``` {.sourceCode .julia}
 # Gaussian blurring kernel
-kernel = exp.( - 10 .* (t .- 5).^2)
+kernel = exp.( -10 .* (t .- 5) .^ 2)
 kernel ./= sum(kernel) # normalize kernel to sum of 1
 kernel = ifftshift(kernel) # move center to index pos 1
 ```
@@ -219,7 +219,7 @@ img = float(data(testimage("cameraman")))'
 # Create the blurring kernel in frequency domain
 x = hcat(ntuple(x -> collect((1:512) - 257), 512)...)
 k = 0.001
-blurring_ft = exp.(-k*(x .^ 2 + x' .^ 2).^(5//6))
+blurring_ft = exp.(-k .* (x .^ 2 .+ x' .^ 2) .^ (5//6))
 # Create additive noise
 noise = rand(size(img))
 # Fourier transform of the blurred image, with additive noise
