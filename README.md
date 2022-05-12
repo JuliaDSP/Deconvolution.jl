@@ -2,8 +2,8 @@
 
 | **Documentation**                       | **Build Status**                          | **Code Coverage**               |
 |:---------------------------------------:|:-----------------------------------------:|:-------------------------------:|
-| [![][docs-stable-img]][docs-stable-url] | [![Build Status][travis-img]][travis-url] | [![][coveral-img]][coveral-url] |
-| [![][docs-latest-img]][docs-latest-url] | [![Build Status][appvey-img]][appvey-url] | [![][codecov-img]][codecov-url] |
+| [![][docs-stable-img]][docs-stable-url] | [![Build Status][gha-ci-img]][gha-ci-url] | [![][coveral-img]][coveral-url] |
+| [![][docs-latest-img]][docs-latest-url] |                                           | [![][codecov-img]][codecov-url] |
 
 Introduction
 ------------
@@ -191,11 +191,8 @@ original author is Mosè Giordano.
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-stable-url]: https://juliadsp.github.io/Deconvolution.jl/stable/
 
-[travis-img]: https://travis-ci.org/JuliaDSP/Deconvolution.jl.svg?branch=master
-[travis-url]: https://travis-ci.org/JuliaDSP/Deconvolution.jl
-
-[appvey-img]: https://ci.appveyor.com/api/projects/status/8gfd4r6807w93umj/branch/master?svg=true
-[appvey-url]: https://ci.appveyor.com/project/giordano/deconvolution-jl
+[gha-ci-img]: https://github.com/JuliaDSP/Deconvolution.jl/actions/workflows/ci.yml/badge.svg?branch=master
+[gha-ci-url]: https://github.com/JuliaDSP/Deconvolution.jl/actions/workflows/ci.yml
 
 [coveral-img]: https://coveralls.io/repos/github/JuliaDSP/Deconvolution.jl/badge.svg?branch=master
 [coveral-url]: https://coveralls.io/github/JuliaDSP/Deconvolution.jl?branch=master
