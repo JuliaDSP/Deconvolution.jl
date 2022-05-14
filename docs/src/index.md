@@ -131,7 +131,7 @@ in each of the following intervals: $[0, 0.5]$, $[0.5, 1]$, $[1,
 1.5]$. Use the `LombScargle.model` function to create the best-fitting
 Lomb–Scargle model at the three best frequencies, that can be found with
 the `findmaxfreq` function (see the manual at
-<http://lombscarglejl.readthedocs.io/> for more details):
+<https://juliaastro.github.io/LombScargle.jl/stable/> for more details):
 
 ``` {.sourceCode .julia}
 m1 = LombScargle.model(t, y, findmaxfreq(p, [0, 0.5])[1]) # first model
